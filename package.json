@@ -1,0 +1,40 @@
+{
+  "name": "my-electron-app",
+  "version": "1.0.0",
+  "description": "Web-Interface",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "author": "Modihive",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^16.2.8",
+    "electron-packager": "^15.4.0",
+    "electron-rebuild": "^3.2.5",
+    "electron-builder": "^24.6.3"
+  },
+  "dependencies": {
+    "@electron/remote": "^2.0.1",
+    "chart.js": "^3.7.0",
+    "plotly.js-dist": "^2.8.3"
+  },
+  "build": {
+    "appId": "com.wuart.app",
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "icon": "appicon.icns",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "universal"
+          ]
+        }
+      ],
+      "mergeASARs": false
+    }
+  }
+}

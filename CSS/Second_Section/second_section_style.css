@@ -1,0 +1,16 @@
+.Second-Section{
+    display: flex;   
+    flex-direction: row;
+    
+    
+    
+    margin-top: 25px;
+    margin-bottom: 105px;
+    
+}
+
+.Right-Section{
+    order: 3;
+    flex-basis:33.333%;
+
+}

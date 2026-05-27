@@ -1,0 +1,23 @@
+{
+  "name": "my-electron-app",
+  "version": "1.0.0",
+  "description": "Web-Interface",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "rebuild": "electron-rebuild"
+  },
+  "author": "Modihive",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^16.2.8",
+    "electron-packager": "^15.4.0"
+  },
+  "dependencies": {
+    "@electron/remote": "^2.0.1",
+    "chart.js": "^3.7.0",
+    "electron-builder": "^24.6.3",
+    "electron-rebuild": "^3.2.5",
+    "plotly.js-dist": "^2.8.3"
+  }
+}

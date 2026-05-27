@@ -1,0 +1,48 @@
+
+.Left-Section{
+
+    flex-basis: 33.333%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: flex-start;
+    
+    
+}
+
+
+.Battery-Monitor, .Firmware{
+    text-align: center;
+    border: 1px solid black;
+    height: 100%;
+}
+
+#battery_monitor{
+    width: min-content;
+    border: 1px solid black;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    height: 30%;
+    
+}
+
+
+.Battery-Monitor-Details{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+
+
+    
+
+
+.Voltage-Monitor, .Charge-Monitor{
+    text-align: center;
+}
+
+
+

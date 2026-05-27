@@ -1,0 +1,45 @@
+#first-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    visibility: visible;
+    opacity: 1;
+    height: 30px;
+    
+
+}
+
+#new_section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    visibility: visible;
+    opacity: 1;
+    height: 60px;
+}
+
+.CONN{
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-start;
+}
+
+
+.Logo{
+    align-self: center;
+}
+
+.Connect_Buttons{
+    align-self: center;
+    display: flex;
+    flex-direction: row;
+    
+}
+
+.Connect_Buttons button{
+    margin-left: 10px;
+}

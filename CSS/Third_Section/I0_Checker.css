@@ -1,0 +1,31 @@
+#I_o_category{
+    display: none;
+    justify-content: start;
+    flex-direction: column;
+    gap: 15px;
+    border: 1px solid black;
+    width: 100%;
+}
+
+.IO_div_1 ,.IO_div_2 ,.IO_div_3 ,.IO_div_4 ,.IO_div_5{
+    border: 1px solid black;
+    
+    display: flex;
+    flex-direction: row;
+    height: 500px;
+}
+
+.Pins_Names{
+    flex-basis: 12%;
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+
+}
+
+.Plotter{
+    flex-basis: 88%;
+    height: 100%;
+   
+    border: 1px solid black;
+}

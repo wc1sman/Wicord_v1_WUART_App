@@ -1,0 +1,12 @@
+//packacger: 
+//Need to have the correct package.json
+//command
+
+MacOs npx electron-packager . electron-app --platform=darwin --asar --icon=appicon.icns
+Windows npx electron-packager . electron-app --platform=win32 --asar --icon=appicon.png
+
+//builder:
+// Need to have the correct package.json
+//command
+
+npm run dist

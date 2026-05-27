@@ -1,0 +1,863 @@
+<!--index.html-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://apis.example.com" />
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self' ">
+
+    <link rel="stylesheet" href="./style.css" defer>
+    <script type="module" src="./modules/StylingModules.js" defer></script>
+    <script type="module" src="./connection.js" defer ></script>
+    <title>WUART SOFTWARE</title>
+  </head>
+  <body>
+    
+    <div id="site_wrapper" class="">
+      <div id="navsidebar">
+
+        <div id="logo">
+          <img src="images/logo.svg" />
+          <div id="appname">WUART</div>
+        </div>
+
+        <div id="mainstatus">
+          <p class="navmain battery_status" id="battery_status">
+            <span>Battery Status</span>
+            <img src="images/battery_low.svg" />
+          </p>
+          <div id="battery_wrapper" class="">
+            <div id="battery_voltage">
+              <span id="battery_voltage_value" class="battery_value">-</span>
+              <span id="battery_voltage_label" class="battery_label">VOLTAGE</span>
+            </div>
+            <div id="battery_charge">
+              <span id="battery_charge_value" class="battery_value">-</span>
+              <span id="battery_charge_label" class="battery_label">CHARGE</span>
+            </div>
+          </div>
+          <div id="show_device_wrapper">
+            <button id="toggle_device" class="primary"><span>ADJUST PINS</span></button>
+          </div>
+        </div>
+
+        <div id="navigation">
+          <ul>
+            <li>
+              <button id="UART_Debugger" class="mainnavlink" data-tab="uart-content">
+                <span class="mainnavlabel">UART Debugger</span>
+              </button>
+            </li>
+            <li>
+              <button id="Device_Programmer" class="mainnavlink" data-tab="device-programmer-uart-dtr">
+                <span class="mainnavlabel">Device Programmer</span>
+              </button>
+            </li>
+            <li>
+              <button id="Interface_Checker" class="mainnavlink" data-tab="interface-checker-i2c-builder">
+                <span class="mainnavlabel">Interface Checker</span>
+              </button>
+            </li>
+            <li>
+              <button id="I_O_Checker" class="mainnavlink" data-tab="i-o-checker">
+                <span class="mainnavlabel">I/O Checker</span>
+              </button>
+            </li>
+            <li>
+              <button id="Current_Monitor" class="mainnavlink" data-tab="current-monitor">
+                <span class="mainnavlabel">Current Monitor</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div id="appstatus">
+          <div id="connection_status" class="">
+            <span id="connection_label">Connected</span>
+            <button id="power" class="outline">
+              <span>OFF</span>
+            </button>
+          </div>
+          <div id="firmware_version">
+            <p>Firmware Version <span>x.x.x</span></p>
+          </div>
+          <div id="sd_status" class="">
+            <span class="">SD Card OFF</span>
+          </div>
+          <div id="applog">
+            <div>Logs Folder</div>
+            <button id="applog_folder">
+              <span>Log Folder</span>
+            </button>
+            <button id="browse_log">
+              <img src="images/directory.svg" />
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- MENU Overlay -->
+      <div id="menuoverlay"></div>
+      <!-- DISCONNECTED -->
+      <div id="disconnected" class="main_content">
+        <div class="connect_wrapper">
+          <p>The device is currently disconnected.<br>Plug-in the WUART Bridge to your USB port, select device baudrate and click connect.</p>
+          <div class="select_baudrate">
+            <select id="baudrate_connect">
+              <option value="" disabled selected>Select Device Baudrate</option>
+              <option value="4800">4800</option>
+              <option value="9600">9600</option>
+              <option value="19200">19200</option>
+              <option value="57600">57600</option>
+              <option value="74880">74880</option>
+              <option value="115200">115200</option>
+              <option value="230400">230400</option>
+              <option value="460800">460800</option>
+              <option value="500000">500000</option>  
+              <option value="576000">576000</option>  
+              <option value="921600">921600</option>    
+              <option value="1000000">1000000</option> 
+            </select>
+          </div>
+          <select id="usb_devices"></select>
+          <button id="connect" class="primary hide" disabled>
+            <span>CONNECT</span>
+            <img src="images/reload_new_hov.svg">
+          </button>
+          <button id="target_connect" class="primary hide">
+            <span>OK</span>
+            <img src="images/reload_new_hov.svg">
+          </button>
+          <span id="orauto" class="hide">- or -</span>
+          <button id="autoconnect" class="primary hide">
+            <span>AUTO CONNECT</span>
+            <img src="images/reload_new_hov.svg">
+          </button>
+        </div>
+      </div>
+      <!-- LOADING STATE -->
+      <div id="loading" class="main_content">
+        <div class="loading_wrapper">
+          <p>Setting Interface</p>
+          <img src="images/reload_new.svg">
+        </div>
+      </div>
+
+      <!-- UART DEBUGGER -->
+      <div id="uart-content" class="uart-content main_content ">
+        <div class="main_title">
+          <h1>
+            <button class="menu"><img src="images/menu.svg" /></button>
+            <span>UART DEBUGGER</span>
+            <button class="info">INFO</button>
+          </h1>
+          <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras iaculis nisi velit, vel commodo nibh hendrerit facilisis. Vestibulum id erat pellentesque, gravida mi id, fringilla ex. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+        </div>
+        <div class="inner_content">
+          <form class="active">
+            <div id="command-wrapper">
+              <div id="command">
+                <input name="uart_command" type="text" id="uart_command" placeholder="type command..."/>
+                <button type="submit" class="primary"><span>SEND</span></button>
+              </div>
+              <button id="create_log" class="primary">START LOG</button>
+              
+            </div>
+            <div class="textarea medium" id="uart_response">
+              <ul>
+              </ul>
+            </div>
+          </form>
+          <div class="controls">
+            <label class="container">Auto-scroll
+              <input type="checkbox" name="autoscroll" id="autoscroll" checked />
+              <span class="checkmark"></span>
+            </label>
+            <label class="container">Show Timestamp
+              <input type="checkbox" name="timestamp" id="timestamp" checked />
+              <span class="checkmark"></span>
+            </label>
+            <button id="clear_terminal">CLEAR</button>
+            <div class="text_size">
+              <button id="text_small">A</button>
+              <button id="text_medium" class="font-active">A</button>
+              <button id="text_large">A</button>
+            </div>
+          </div>
+          <div id="uart_log">
+            <button id="stop_listening" class="primary on">
+              <span>STOP LISTENING</span>
+              <img src="images/reload_new.svg" />
+            </button>
+            <div id="uart_baud">
+              <span>Change Baudrate</span>
+              <select id="uart_baudrate_select">
+                <option value="" disabled selected>Select Device Baudrate</option>
+                <option value="4800">4800</option>
+                <option value="9600">9600</option>
+                <option value="19200">19200</option>
+                <option value="57600">57600</option>
+                <option value="74880">74880</option>
+                <option value="115200">115200</option>
+                <option value="230400">230400</option>
+                <option value="460800">460800</option>
+                <option value="500000">500000</option>  
+                <option value="576000">576000</option>  
+                <option value="921600">921600</option>    
+                <option value="1000000">1000000</option> 
+              </select>
+              <button id="baud_apply" class="primary" disabled><span>APPLY</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- DEVICE PROGRAMMER / UART / DTR DEBUGGER -->
+      <div id="device-programmer-uart-dtr" class="device-programmer main_content ">
+        <div class="main_title">
+          <h1>
+            <button class="menu"><img src="images/menu.svg" /></button>
+            <span>DEVICE PROGRAMMER</span>
+            <button class="info">INFO</button>
+          </h1>
+          <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras iaculis nisi velit, vel commodo nibh hendrerit facilisis. Vestibulum id erat pellentesque, gravida mi id, fringilla ex. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+        </div>
+        <div class="sub_title">
+          <div class="subgroup">
+            <span class="main_sub current">UART FLASHER</span>
+            <div class="subgroup_2">
+              <span class="main_sub current">DTR</span>
+              <button data-tab="device-programmer-uart-cap-dtr" class="main_sub">CAP-DTR</button>
+            </div>
+          </div>
+          <div class="subgroup">
+            <button data-tab="device-programmer-esp32" class="main_sub">ESP32 FLASHER</button>
+          </div>
+        </div>
+        <div class="inner_content">
+          <form>
+            <div class="select_path firmware_path">
+              <label>Select Firmware Binary Path</label>
+              <fieldset>
+                <input name="firmware_path" readonly type="text" class="firmware_path" placeholder=""/>
+                <button class="firmware_browse browse">Browse...</button>
+              </fieldset>
+            </div>
+            <div class="select_path script_path">
+              <label>Select UART Script Path</label>
+              <fieldset>
+                <input name="script_path" type="text" readonly class="script_path" placeholder=""/>
+                <button class="script_browse browse">Browse...</button>
+              </fieldset>
+            </div>
+            <div class="select_path arguments">
+              <label>Arguments</label>
+              <fieldset>
+                <input name="argument" type="text" class="argument" placeholder="-UART Flasher -Script -arguments"/>
+              </fieldset>
+            </div>
+            <button disabled class="send_command primary"><span>SHOW COMMAND</span></button>
+          </form>
+          <div class="textarea_wrapper">
+            <div class="textarea" id="dtr_textarea">
+              <ul>
+              </ul>
+              <button disabled class="clipboard" data-target="dtr_textarea">Copy to Clipboard</button>
+            </div>
+            <button class="primary disconnect_option" disabled><span>DISCONNECT</span></button>
+          </div>
+        </div>            
+      </div>
+      <!-- DEVICE PROGRAMMER / UART / CAP-DTR DEBUGGER -->
+      <div id="device-programmer-uart-cap-dtr" class="device-programmer main_content ">
+        <div class="main_title">
+          <h1>
+            <button class="menu"><img src="images/menu.svg" /></button>
+            <span>DEVICE PROGRAMMER</span>
+            <button class="info">INFO</button>
+          </h1>
+          <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras iaculis nisi velit, vel commodo nibh hendrerit facilisis. Vestibulum id erat pellentesque, gravida mi id, fringilla ex. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+        </div>
+        <div class="sub_title">
+          <div class="subgroup">
+            <span class="main_sub current">UART FLASHER</span>
+            <div class="subgroup_2">
+              <button data-tab="device-programmer-uart-dtr" class="main_sub">DTR</button>
+              <span class="main_sub current">CAP-DTR</span>
+            </div>
+          </div>
+          <div class="subgroup">
+            <button data-tab="device-programmer-esp32" class="main_sub">ESP32 FLASHER</button>
+          </div>
+        </div>
+        <div class="inner_content">
+          <form>
+            <div class="select_path firmware_path">
+              <label>Select Firmware Binary Path</label>
+              <fieldset>
+                <input name="firmware_path" type="text" readonly class="firmware_path" placeholder=""/>
+                <button class="firmware_browse browse">Browse...</button>
+              </fieldset>
+            </div>
+            <div class="select_path script_path">
+              <label>Select UART Script Path</label>
+              <fieldset>
+                <input name="script_path" type="text" class="script_path" readonly placeholder=""/>
+                <button class="script_browse browse">Browse...</button>
+              </fieldset>
+            </div>
+            <div class="select_path arguments">
+              <label>Arguments</label>
+              <fieldset>
+                <input name="argument" type="text" class="argument"  placeholder="-UART Flasher -Script -arguments"/>
+              </fieldset>
+            </div>
+            <button disabled class="send_command primary"><span>SHOW COMMAND</span></button>
+          </form>
+          <div class="textarea_wrapper">
+            <div class="textarea" id="cap_textarea">
+              <ul>
+              </ul>
+              <button disabled class="clipboard" data-target="cap_textarea">Copy to Clipboard</button>
+            </div>
+            <button class="primary disconnect_option" disabled><span>DISCONNECT</span></button>
+          </div>
+        </div>            
+      </div>
+      <!-- DEVICE PROGRAMMER / ESP32 DEBUGGER -->
+      <div id="device-programmer-esp32" class="device-programmer main_content ">
+        <div class="main_title">
+          <h1>
+            <button class="menu"><img src="images/menu.svg" /></button>
+            <span>DEVICE PROGRAMMER</span>
+            <button class="info">INFO</button>
+          </h1>
+          <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras iaculis nisi velit, vel commodo nibh hendrerit facilisis. Vestibulum id erat pellentesque, gravida mi id, fringilla ex. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+        </div>
+        <div class="sub_title">
+          <div class="subgroup">
+            <span class="main_sub">UART FLASHER</span>
+            <div class="subgroup_2">
+              <button data-tab="device-programmer-uart-dtr" class="main_sub">DTR</button>
+              <button data-tab="device-programmer-uart-cap-dtr" class="main_sub">CAP-DTR</button>
+            </div>
+          </div>
+          <div class="subgroup">
+            <span class="main_sub current">ESP32 FLASHER</span>
+          </div>
+        </div>
+        <div class="inner_content">
+          <form>
+            <div class="select_path firmware_path">
+              <label>Select Firmware Binary Path</label>
+              <fieldset>
+                <input name="firmware_path" readonly type="text" class="firmware_path" placeholder=""/>
+                <button class="firmware_browse browse">Browse...</button>
+              </fieldset>
+            </div>
+            <div class="select_path script_path">
+              <label>Select ESP32 Script Path</label>
+              <fieldset>
+                <input name="script_path" readonly type="text" class="script_path" placeholder=""/>
+                <button class="script_browse browse">Browse...</button>
+              </fieldset>
+            </div>
+            <div class="select_path arguments">
+              <label>Arguments</label>
+              <fieldset>
+                <input name="argument" type="text" class="argument" placeholder="-ESP32 Flasher -Script -arguments"/>
+              </fieldset>
+            </div>
+            <button disabled class="send_command primary"><span>SHOW COMMAND</span></button>
+          </form>
+          <div class="textarea_wrapper">
+            <div class="textarea" id="esp32_textarea">
+              <ul>
+              </ul>
+              <button disabled class="clipboard" data-target="esp32_textarea">Copy to Clipboard</button>
+            </div>
+            <button class="primary disconnect_option" disabled><span>DISCONNECT</span></button>
+          </div>
+        </div>            
+      </div>
+      <!-- INTERFACE CHECKER / I2C / Command BUILDER -->
+      <div id="interface-checker-i2c-builder" class="interface-checker main_content ">
+        <div class="main_title">
+          <h1>
+            <button class="menu"><img src="images/menu.svg" /></button>
+            <span>INTERFACE CHECKER</span>
+            <button class="info">INFO</button>
+          </h1>
+          <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras iaculis nisi velit, vel commodo nibh hendrerit facilisis. Vestibulum id erat pellentesque, gravida mi id, fringilla ex. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+        </div>
+        <div class="sub_title">
+          <div class="subgroup">
+            <span class="main_sub current">I2C</span>
+            <div class="subgroup_2">
+              <span class="main_sub current">COMMAND BUILDER</span>
+              <button data-tab="interface-checker-i2c-scanner" class="main_sub">I2C SCANNER</button>
+            </div>
+          </div>
+          <div class="subgroup">
+            <button data-tab="interface-checker-spi" class="main_sub">SPI</button>
+          </div>
+        </div>
+        <div class="inner_content">
+          <form class="configform">
+            <div class="form_options">
+              <div class="form_options_group">
+                <label>Frequency</label>
+                <select id="i2c_frequency">
+                  <option value="100000">100 kHz</option>
+                  <option value="400000">400 kHz</option>
+                  <option value="1000000">1 MHz</option>
+                </select>
+              </div>
+            </div>
+            <button class="config primary"><span>CONFIG</span></button>
+          </form>
+          <form class="sendform">
+              <fieldset>
+                <div class="field_wrapper">
+                  <label>Length (1-255)</label>
+                  <input data-validation="int255" maxlength="3" name="length" type="text" class="length hex" placeholder="e.g. 3"/>
+                </div>
+                <div class="field_wrapper">
+                  <label>Device Address (HEX Values)</label>
+                  <input data-validation="hex" maxlength="2" name="device_address" type="text" class="device_address hex" placeholder="e.g. 1F"/>
+                </div>
+                <div class="field_wrapper">
+                  <label>Register Address (HEX Values)</label>
+                  <input data-validation="hex" maxlength="2" name="target_address" type="text" class="target_address hex" placeholder="e.g. 1F"/>
+                </div>
+                <div class="field_wrapper">
+                  <label>Data (HEX Values, Comma Separated)</label>
+                  <input data-validation="hexdata" name="value" type="text" class="value hexdata" placeholder="e.g. 01,03,9F or 0x01,0x03,0x9F"/>
+                </div>
+              </fieldset>
+              <button disabled class="send_command primary i2c_send"><span>SEND COMMAND</span></button>
+          </form>
+          <div class="textarea">
+            <ul>
+            </ul>
+            <button disabled class="clipboard">Copy to Clipboard</button>
+          </div>
+        </div>            
+      </div>
+      <!-- INTERFACE CHECKER / I2C / I2C SCANNER -->
+      <div id="interface-checker-i2c-scanner" class="interface-checker main_content ">
+        <div class="main_title">
+          <h1>
+            <button class="menu"><img src="images/menu.svg" /></button>
+            <span>INTERFACE CHECKER</span>
+            <button class="info">INFO</button>
+          </h1>
+          <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras iaculis nisi velit, vel commodo nibh hendrerit facilisis. Vestibulum id erat pellentesque, gravida mi id, fringilla ex. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+        </div>
+        <div class="sub_title">
+          <div class="subgroup">
+            <span class="main_sub current">I2C</span>
+            <div class="subgroup_2">
+              <button data-tab="interface-checker-i2c-builder" class="main_sub">COMMAND BUILDER</button>
+              <span class="main_sub current">I2C SCANNER</span>
+            </div>
+          </div>
+          <div class="subgroup">
+            <button data-tab="interface-checker-spi" class="main_sub">SPI</button>
+          </div>
+        </div>
+        <div class="inner_content">
+          <form class="sendform">
+              <button class="send_command primary i2c_scan"><span>SCAN</span></button>
+          </form>
+          <div class="textarea">
+            <ul>
+            </ul>
+            <button disabled class="clipboard">Copy to Clipboard</button>
+          </div>
+        </div>            
+      </div>
+      <!-- INTERFACE CHECKER / SPI -->
+      <div id="interface-checker-spi" class="interface-checker main_content ">
+        <div class="main_title">
+          <h1>
+            <button class="menu"><img src="images/menu.svg" /></button>
+            <span>INTERFACE CHECKER</span>
+            <button class="info">INFO</button>
+          </h1>
+          <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras iaculis nisi velit, vel commodo nibh hendrerit facilisis. Vestibulum id erat pellentesque, gravida mi id, fringilla ex. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+        </div>
+        <div class="sub_title">
+          <div class="subgroup">
+            <span class="main_sub">I2C</span>
+            <div class="subgroup_2">
+              <button data-tab="interface-checker-i2c-builder" class="main_sub">COMMAND BUILDER</button>
+              <button data-tab="interface-checker-i2c-scanner" class="main_sub">I2C SCANNER</button>
+            </div>
+          </div>
+          <div class="subgroup">
+            <span class="main_sub current">SPI</span>
+          </div>
+        </div>
+        <div class="inner_content">
+          <form class="configform">
+            <div class="form_options">
+              <div class="form_options_group">
+                <label>SPI Clock</label>
+                <select id="spi_clock">
+                  <option selected value="1">1 MHz</option>
+                  <option value="2">2 MHz</option>
+                  <option value="4">4 MHz</option>
+                  <option value="8">8 MHz</option>
+                  <option value="16">16 MHz</option>
+                  <option value="20">20 MHz</option>
+                  <option value="25">25 MHz</option>
+                </select>
+              </div>
+              <div class="form_options_group">
+                <label>Byte Order</label>
+                <select id="byte_order">
+                  <option selected value="1">MSB</option>
+                  <option value="0">LSB</option>
+                </select>
+              </div>
+              <div class="form_options_group">
+                <label>SPI MODE</label>
+                <select id="spi_mode">
+                  <option selected value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+              </div>
+            </div>
+            <button class="config primary"><span>CONFIG</span></button>
+          </form>
+          <form class="sendform">
+            <fieldset>
+              <div class="field_wrapper">
+                <label>Length (1-255)</label>
+                <input data-validation="int255" maxlength="3" name="length" type="text" class="length hex" placeholder="e.g. 3"/>
+              </div>
+              <div class="field_wrapper">
+                <label>Data (HEX Values, Comma Separated)</label>
+                <input data-validation="hexdata" name="value" type="text" class="value hexdata" placeholder="e.g. 01,03,9F or 0x01,0x03,0x9F"/>
+              </div>
+            </fieldset>
+            <button disabled class="send_command primary spi_send"><span>SEND COMMAND</span></button>
+          </form>
+          <div class="textarea">
+            <ul>
+            </ul>
+            <button disabled class="clipboard">Copy to Clipboard</button>
+          </div>
+        </div>            
+      </div>
+      <!-- I/O Checker -->
+      <div id="i-o-checker" class="i-o-checker main_content grid_mode_off layout_mode_row">
+        <div class="main_title">
+          <h1>
+            <button class="menu"><img src="images/menu.svg" /></button>
+            <span>I/O CHECKER</span>
+            <button class="io_settings options_show"></button>
+            <button class="info">INFO</button>
+          </h1>
+          <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras iaculis nisi velit, vel commodo nibh hendrerit facilisis. Vestibulum id erat pellentesque, gravida mi id, fringilla ex. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+        </div>
+        <div class="checker_options">
+          <div class="form_options_group">
+            <label>Frequency</label>
+            <select class="frequency">
+              <option value="5" selected>5 Hz</option>
+              <option value="10">10 Hz</option>
+              <option value="100">100 Hz</option>
+            </select>
+          </div>
+          <div class="form_options_group">
+            <button class="primary plot_toggle">
+              <span>PLOT</span>
+              <img src="images/reload_new.svg">
+            </button>
+          </div>
+          <div class="form_options_group pin_group">
+            <button id="pin_button" class="pin_toggle">DIGITAL OUT</button>
+          </div>
+          <div class="form_options_group layout">
+            <label>Layout</label>
+            <div class="layout_options">
+              <button id="layout_row" class="layout_row">
+                <span class="line"></span>
+                <span class="line"></span>
+              </button>
+              <button id="layout_column" class="layout_column">
+                <span class="line"></span>
+                <span class="line"></span>
+                <span class="line"></span>
+                <span class="line"></span>
+              </button>
+            </div>
+          </div>
+          <div class="form_options_group">
+            <label>Guides</label>
+            <div class="grid_options">
+              <button id="grid_off">
+                <span class="">OFF</span>
+              </button>
+              <button id="grid_5">
+                <span class="">5</span>
+              </button>
+              <button id="grid_10">
+                <span class="">10</span>
+              </button>
+            </div>
+          </div>
+          <button id="create_iochecker_log" class="primary">START LOG</button>
+        </div>
+        <div class="inner_content">
+          <div class="grid_lines">
+            <div class="grid_line grid_line_10"></div>
+            <div class="grid_line grid_line_10 grid_line_5"></div>
+            <div class="grid_line grid_line_10"></div>
+            <div class="grid_line grid_line_10 grid_line_5"></div>
+            <div class="grid_line grid_line_10"></div>
+            <div class="grid_line grid_line_10 grid_line_5"></div>
+            <div class="grid_line grid_line_10"></div>
+            <div class="grid_line grid_line_10 grid_line_5"></div>
+            <div class="grid_line grid_line_10"></div>
+          </div>
+          <div class="grid_lines grid_mode_2 grid_10">
+            <div class="grid_line grid_line_10"></div>
+            <div class="grid_line grid_line_10 grid_line_5"></div>
+            <div class="grid_line grid_line_10"></div>
+            <div class="grid_line grid_line_10 grid_line_5"></div>
+            <div class="grid_line grid_line_10"></div>
+            <div class="grid_line grid_line_10 grid_line_5"></div>
+            <div class="grid_line grid_line_10"></div>
+            <div class="grid_line grid_line_10 grid_line_5"></div>
+            <div class="grid_line grid_line_10"></div>
+          </div>
+          <div class="plotter enabled" id="plot1">
+            <div class="plot_header">
+              <span>ANALOG READ 1</span>
+              <div class="form_options_group y-range">
+                <label>Y-Axis</label>
+                <select class="frequency">
+                  <option value="4096">0 - 4096</option>
+                  <option value="2048">0 - 2048</option>
+                  <option value="1024">0 - 1024</option>
+                  <option value="custom">Custom</option>
+                </select>
+              </div>
+              <div class="form_options_group min_max_range">
+                <form id="minmax_form1">
+                  <input name="min" id="min_1" placeholder="min" />
+                  <input name="max" id="max_1" placeholder="max"/>
+                  <button type="submit" class="primary">
+                    <span>APPLY</span>
+                  </button>
+                </form>
+              </div>
+              <div class="form_options_group">
+                <label>Show</label>
+                <button class="switch">
+                  <span class="switch_off"></span>
+                  <span class="switch_on"></span>
+                </button>
+              </div>
+            </div>
+            <div class="canvas_wrapper">
+              <canvas class="plot_area"></canvas>
+            </div>
+          </div>
+          <div class="plotter enabled" id="plot2">
+            <div class="plot_header">
+              <span>ANALOG READ 2</span>
+              <div class="form_options_group y-range">
+                <label>Y-Axis</label>
+                <select class="frequency">
+                  <option value="4096">0 - 4096</option>
+                  <option value="2048">0 - 2048</option>
+                  <option value="1024">0 - 1024</option>
+                  <option value="custom">Custom</option>
+                </select>
+              </div>
+              <div class="form_options_group min_max_range">
+                <form id="minmax_form2">
+                  <input name="min" id="min_2" placeholder="min" />
+                  <input name="max" id="max_2" placeholder="max"/>
+                  <button type="submit" class="primary" id="minmax_button2">
+                    <span>APPLY</span>
+                  </button>
+                </form>
+              </div>
+              <div class="form_options_group">
+                <label>Show</label>
+                <button class="switch">
+                  <span class="switch_off"></span>
+                  <span class="switch_on"></span>
+                </button>
+              </div>
+            </div>
+            <div class="canvas_wrapper">
+              <canvas class="plot_area"></canvas>
+            </div>
+          </div>
+          <div class="plotter enabled digital" id="plot3">
+            <div class="plot_header">
+              <span>DIGITAL READ 1</span>
+              <div class="form_options_group">
+                <label>Show</label>
+                <button class="switch">
+                  <span class="switch_off"></span>
+                  <span class="switch_on"></span>
+                </button>
+              </div>
+            </div>
+            <div class="canvas_wrapper">
+              <canvas class="plot_area"></canvas>
+            </div>
+          </div>
+          <div class="plotter enabled digital" id="plot4">
+            <div class="plot_header">
+              <span>DIGITAL READ 2</span>
+              <div class="form_options_group">
+                <label>Show</label>
+                <button class="switch">
+                  <span class="switch_off"></span>
+                  <span class="switch_on"></span>
+                </button>
+              </div>
+            </div>
+            <div class="canvas_wrapper">
+              <canvas class="plot_area"></canvas>
+            </div>
+          </div>
+          <div class="plotter digital pin_plotter" id="plot5">
+            <div class="plot_header">
+              <span>SEND SIGNAL</span>
+              <button class="pin">LOW</button>
+              <span class="pin_error_message">Min. interval between low/high: 0.8s</span>
+            </div>
+            <div class="canvas_wrapper">
+              <canvas class="plot_area"></canvas>
+            </div>
+          </div>
+        </div>            
+      </div>
+      <!-- CURRENT MONITOR -->
+      <div id="current-monitor" class="current-monitor main_content ">
+        <div class="main_title">
+          <h1>
+            <button class="menu"><img src="images/menu.svg" /></button>
+            <span>CURRENT MONITOR</span>
+            <button class="info">INFO</button>
+          </h1>
+          <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras iaculis nisi velit, vel commodo nibh hendrerit facilisis. Vestibulum id erat pellentesque, gravida mi id, fringilla ex. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+        </div>
+        <div class="checker_options">
+          <div class="form_options_group">
+            <label>Frequency</label>
+            <select class="frequency">
+              <option value="1" selected>1 Hz</option>
+              <option value="2">2 Hz</option>
+              <option value="5">5 Hz</option>
+              <option value="10">10 Hz</option>
+            </select>
+          </div>
+          <div class="form_options_group">
+            <button class="primary plot_toggle">
+              <span>PLOT</span>
+              <img src="images/reload_new.svg">
+            </button>
+          </div>
+          <button id="create_battery_log" class="primary">START LOG</button>
+        </div>
+        <div class="inner_content">
+          <div class="plotter enabled" id="voltage_plot">
+            <div class="plot_header">
+              <div class="current_plot_title">
+                <span>VOLTAGE MONITOR</span>
+                <span class="monitor" id="voltage_monitor">n/a</span>
+              </div>
+            </div>
+            <div class="canvas_wrapper">
+              <canvas class="plot_area"></canvas>
+            </div>
+          </div>
+          <div class="plotter enabled" id="current_plot">
+            <div class="plot_header">
+              <div class="current_plot_title">
+                <span>CURRENT MONITOR</span>
+                <span class="monitor" id="current_monitor">n/a</span>
+                <span id="current_direction"></span>
+              </div>
+              <div class="form_options_group">
+                <label>Y-Axis Range</label>
+                <select class="frequency">
+                  <option value="500" data-min="-500">-500 / 500mA</option>
+                  <option value="300" data-min="-300">-300 / 300mA</option>
+                  <option value="100" data-min="-100">-100 / 100mA</option>
+                  <option value="500" data-min="0">0 / 500mA</option>
+                  <option value="300" data-min="0">0 / 300mA</option>
+                  <option value="100" data-min="0">0 / 100mA</option>
+                  <option value="0" data-min="-500">-500 / 0mA</option>
+                  <option value="0" data-min="-300">-300 / 0mA</option>
+                  <option value="0" data-min="-100">-100 / 0mA</option>
+                  <option value="custom">Custom</option>
+                </select>
+              </div>
+              <div class="form_options_group min_max_range">
+                <form id="minmax_form3">
+                  <input name="min" id="min_3" placeholder="min" />
+                  <input name="max" id="max_3" placeholder="max"/>
+                  <button type="submit" class="primary" id="minmax_button3">
+                    <span>APPLY</span>
+                  </button>
+                </form>
+              </div>
+            </div>
+            <div class="canvas_wrapper">
+              <canvas class="plot_area"></canvas>
+            </div>
+          </div>
+        </div>            
+      </div>
+      <div id="device" class=" r_4 b_8 device_wrapper">
+        <div class="device_image">
+          <img id="jumper_red"src="images/jumper_red.svg" />
+          <img id="jumper_black" src="images/jumper_black.svg" />
+          <img id="device_icon" src="images/device.svg" />
+          <img id="sd_card" src="images/micro_sd.svg" />
+          <div id="led_light" class=""></div>
+          <div id="pin_display">
+            <span class="_1">-</span>
+            <span class="_2">-</span>
+            <span class="_3">-</span>
+            <span class="_4">-</span>
+            <span class="_5">-</span>
+            <span class="_6">-</span>
+            <span class="_7">-</span>
+            <span class="_8">-</span>
+          </div>
+          <div id="pin_drag">
+            <span id="drag1" class="_1">-</span>
+            <span id="drag2" class="_2">-</span>
+            <span id="drag3" class="_3">-</span>
+            <span id="drag4" class="_4">-</span>
+            <span id="drag5" class="_5">-</span>
+            <span id="drag6" class="_6">-</span>
+            <span id="drag7" class="_7">-</span>
+            <span id="drag8" class="_8">-</span>
+          </div>
+          <div id="actions" class="">
+            <button class="reorder">REORDER PINS</button>
+            <button class="cancel">CANCEL</button>
+            <button class="apply">APPLY</button>
+          </div>
+        </div>
+        <div class="device_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras iaculis nisi velit, vel commodo nibh hendrerit facilisis. Vestibulum id erat pellentesque, gravida mi id, fringilla ex. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</div>
+      </div>
+    
+    </div>
+  
+  </body>
+</html>

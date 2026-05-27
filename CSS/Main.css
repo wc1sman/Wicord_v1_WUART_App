@@ -1,0 +1,13 @@
+
+
+body {
+   
+    font: 0.88rem Inconsolata, monospace;
+   
+  }
+
+
+.Waiting_Active{
+      pointer-events: none;
+      opacity: 0.2;
+}

@@ -1,0 +1,107 @@
+#third-section{
+    display: flex;
+    justify-content: center;
+    
+    height: 100%;
+  
+    flex-basis: 33.333%;
+}
+
+textarea {
+    resize: none;
+    text-align: left;
+}
+
+input{
+    text-align: center;
+}
+
+#uart_category{
+    display: none;
+    grid-template-columns: auto auto  ;
+    grid-template-rows: auto auto auto ;
+    gap:6px;
+}
+
+.Uart_Save_Button{
+    grid-row: 1 / 3;
+}
+
+.InputText_Uart_Send{
+    width: 500px;
+}
+
+.Uart_Textarea{
+    resize: none;
+}
+
+#uart_flasher_category{
+    display: none;
+    grid-template-rows: auto auto auto auto auto;
+    gap: 6px;
+}
+
+#esp32_flasher_category{
+    display: none;
+    grid-template-rows: auto auto auto auto auto;
+    gap: 6px;
+}
+
+
+
+#swd_flasher_category{
+    display: none;
+    grid-template-rows: auto auto auto auto auto;
+    gap:7px;
+
+
+}
+
+.SWD_Flasher_Category label{
+    border-style: solid;
+    border-width: thin;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.SWD_Flasher_Category select{
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+#usb_category{
+    display: none;
+    grid-template-rows: auto auto auto auto auto auto;
+    gap: 7px;
+   
+}
+
+.USB_Inputs{
+    display: flex;
+   
+}
+.Device_Adress textarea{
+    width: 170px
+}
+
+.USB_Inputs textarea{
+    height: 40px;
+    text-align: center;
+    width: 170px;
+    
+}
+
+
+#sd_card_category{
+    display: none;
+    grid-template-columns: auto auto auto;
+}
+
+.Spi_Dropdown{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 7px;
+}
+
+

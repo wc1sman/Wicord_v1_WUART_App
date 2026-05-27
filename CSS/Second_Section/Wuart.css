@@ -1,0 +1,248 @@
+.Wuart-Container{
+    display: flex;
+    flex-direction: column;
+    flex-basis: 33.333%;
+    order: 2;
+   
+    height: 400px;
+    row-gap: 5px;
+
+   
+    
+    
+}
+.Wuart_Top{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+  row-gap: 15px;
+  flex-basis: 61%;
+  width: 70%;
+  align-self: center;
+
+  
+}
+
+.Wuart-Container button{
+    border-radius: 50%;
+    align-self: center;
+    
+
+}
+#wuart-led {
+    height: 25px;
+    width: 25px;
+    background-color: #bbb;
+    border-radius: 50%;
+    align-self: center;
+    
+
+  }
+
+  
+.Live_TextBox{
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  border: 1px solid #000;
+  width: 65%;
+  height: 40%;
+  border-radius: 3%;
+  background-color: rgb(36, 34, 34) ;
+
+}
+
+.Vertical_Textbox{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 75%;
+  
+}
+
+.Vertical_Textbox .Textarea{
+  border: 1px solid rgb(29, 28, 28);
+  flex-basis: 12.5%;
+  width: max-content;
+  display: flex;
+  background-color: rgb(36, 34, 34);
+  align-items: flex-start;
+  display: flex;
+
+}
+
+.Vertical_Textbox .Textarea .Text{
+  writing-mode: vertical-lr;
+  color: rgb(190, 227, 252);
+  font-size: 60%;
+  text-align:end;
+  align-self:flex-start;
+  margin:auto;
+  padding-left:21%;
+  
+}
+
+
+.Horizontal_TextBox{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.Horizontal_TextBox .Textarea_H{
+  flex-basis: 12.5%;
+  width: max-content;
+  color: rgb(190, 227, 252);
+  text-align: center;
+}
+
+
+.Jumpers{
+  display: flex;
+  flex-direction: row;
+  border: 1px solid black;
+  width: 65%;
+  height: 23%;
+  align-self: center;
+}
+
+.Jumpers .Jumpers_Container{
+  width:100%;
+  height: 100%;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.Jumpers .Jumpers_Container .Fill{
+  width: 38%;
+  height: 25%;
+  background-color: white;
+  align-self: center;
+  display: flex;
+  justify-content: space-around;
+}
+
+.Jumpers .Jumpers_Container .Fill .Dot{
+  border-radius:50%;
+  width: 3px;
+  height: 3px;
+  background-color: black;
+  align-self: center;
+}
+
+.Jumpers .Jumpers_Container .Fill-Active{
+  width: 75%;
+  height: 25%;
+  background-color: black;
+  align-self: center;
+  display: flex;
+  justify-content: space-around;
+}
+
+.Jumpers .Jumpers_Container .Fill-Active-VCC{
+  width: 75%;
+  height: 25%;
+  background-color: red;
+  align-self: center;
+  display: flex;
+  justify-content: space-around;
+}
+
+.Wuart_Bottom{
+  flex-basis: 38%;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 100%;
+  row-gap: 10px;
+  
+}
+
+.Wuart_Bottom .Bottom_Container{
+  display: flex;
+  align-self: center;
+  flex-direction: column;
+  height: 100%;
+  width: 46%;
+  
+
+}
+
+.Fixed_Numbers{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  align-self: center;
+  
+}
+
+.Pins_Container{
+  border:1px solid black;
+  height:50%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-self: center;
+  border-top: 1.5px solid #000;
+  border-right: 1.5px solid #000;
+  border-left: 1.5px solid #000;
+
+  background-color: gray
+  
+  
+}
+
+.Pins_Container .Pin{
+  border: 1px solid black;
+  text-align: center;
+  writing-mode: vertical-lr;
+  border-radius: 8.5%;
+  width: 50%;
+  background-color: rgb(179, 83, 38);
+  font-size: 65%;
+  
+  
+  
+}
+
+
+
+.WuartDescription{
+  height: 14%;
+  display: flex;
+  align-items: flex-start;
+}
+
+.WuartDescription .Description{
+  color: red;
+  font-size: 85%;
+}
+
+.Bottom_Wuart{
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+
+}
+
+
+.Wuart_BaudRate{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  row-gap:8px;
+  
+}
+
+#UpdateBaud{
+  border-radius: 2px;
+}
+
+#Config{
+  border-radius: 2px;
+}
